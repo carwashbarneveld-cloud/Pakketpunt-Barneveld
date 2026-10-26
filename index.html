@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pakketpunt Barneveld | Dag en nacht je pakket ophalen</title>
+<meta name="description" content="Pakketpunt Barneveld aan de Valkseweg 104. Dag en nacht open. Haal hier je pakket van DPD, Mondial Relay, Vinted Go of UPS op.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#162746;
+  --aqua:#a6bada;
+  --wit:#ffffff;
+  --muted:rgba(22,39,70,.78);
+  --line:rgba(22,39,70,.18);
+  --deur:#2d3f5e;
+  --deur-rand:#4a5d80;
+}
+@supports (background:color-mix(in srgb,red,blue)){
+  :root{
+    --deur:color-mix(in srgb,#a6bada 16%,#162746);
+    --deur-rand:color-mix(in srgb,#a6bada 32%,#162746);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Poppins",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  font-size:1rem;
+  line-height:1.65;
+  color:var(--navy);
+  background:var(--wit);
+}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+.top :focus-visible,.hero :focus-visible,footer :focus-visible{outline-color:var(--aqua)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.5rem}
+
+/* Kop */
+.top{background:var(--navy);color:var(--wit)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:1.1rem;padding-bottom:1.1rem}
+.merk{font-weight:700;font-size:1.05rem;text-decoration:none;letter-spacing:.01em}
+.top nav{display:flex;gap:1.5rem}
+.top nav a{
+  text-decoration:none;font-weight:500;font-size:.95rem;color:var(--aqua);
+  padding-bottom:2px;
+  background:linear-gradient(var(--wit),var(--wit)) no-repeat 0 100%/0 2px;
+  transition:background-size .25s ease,color .2s ease;
+}
+.top nav a:hover,.top nav a:focus-visible{color:var(--wit);background-size:100% 2px}
+
+/* Hoofdbeeld */
+.hero{position:relative;background:var(--navy);color:var(--wit);padding:2.5rem 0 4.5rem;overflow:hidden}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:center}
+.hero h1{
+  font-size:clamp(2.4rem,6vw,4.1rem);
+  line-height:1.05;
+  font-weight:700;
+  letter-spacing:-.02em;
+  margin:0 0 1.2rem;
+}
+.lead{font-size:1.2rem;color:rgba(255,255,255,.88);max-width:30rem;margin:0 0 2rem}
+.knoppen{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.6rem}
+.knop{
+  display:inline-block;
+  padding:.85rem 1.5rem;
+  border-radius:999px;
+  font-weight:600;
+  text-decoration:none;
+  border:2px solid var(--aqua);
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease,color .2s ease;
+}
+.knop:hover,.knop:focus-visible{transform:translateY(-3px);box-shadow:0 10px 18px rgba(0,0,0,.28)}
+.knop:active{transform:translateY(0);box-shadow:none}
+.knop.vol{background:var(--aqua);color:var(--navy)}
+.knop.vol:hover{background:var(--wit);border-color:var(--wit)}
+.knop.rand{color:var(--wit)}
+.knop.rand:hover{background:rgba(166,186,218,.2)}
+.feit{margin:0;color:var(--aqua);font-weight:500}
+
+/* Pakketjes op de achtergrond */
+.achter{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.pk{
+  position:absolute;
+  opacity:var(--o);
+  transform:translate(calc(var(--mx,0) * var(--z) * 1px),calc(var(--my,0) * var(--z) * 1px));
+  transition:transform .6s ease-out;
+}
+.pk i{
+  display:block;
+  position:relative;
+  width:var(--s);
+  height:calc(var(--s) * .75);
+  border:2px solid var(--aqua);
+  border-radius:4px;
+  background:rgba(166,186,218,.08);
+  animation:zweef var(--v) ease-in-out var(--d) infinite;
+}
+.pk i::before{
+  content:"";
+  position:absolute;
+  left:50%;top:0;bottom:0;
+  width:14%;margin-left:-7%;
+  background:rgba(166,186,218,.35);
+}
+.pk i::after{
+  content:"";
+  position:absolute;
+  right:12%;bottom:14%;
+  width:24%;height:16%;
+  border:1.5px solid var(--aqua);
+  border-radius:2px;
+}
+@keyframes zweef{
+  0%,100%{transform:translateY(0) rotate(var(--r))}
+  50%{transform:translateY(-14px) rotate(calc(var(--r) + 6deg))}
+}
+
+/* Kluisjes */
+.wall{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-auto-rows:64px;
+  gap:10px;
+  max-width:380px;
+  margin-left:auto;
+  width:100%;
+}
+.d{
+  position:relative;
+  perspective:1400px;
+  border-radius:6px;
+  background:var(--aqua);
+}
+.d.tall{grid-row:span 2}
+.d.wide{grid-column:span 2;perspective:2600px}
+
+.deur{
+  position:absolute;
+  inset:-1px;
+  z-index:1;
+  border-radius:6px;
+  background:var(--deur);
+  border:1px solid var(--deur-rand);
+  transform-origin:left center;
+  transition:transform .6s ease-in-out;
+}
+.deur::after{
+  content:"";
+  position:absolute;
+  right:10px;top:50%;
+  width:4px;height:18px;
+  margin-top:-9px;
+  border-radius:2px;
+  background:var(--aqua);
+  opacity:.55;
+}
+.deur::before{
+  content:"";
+  position:absolute;
+  left:10px;top:10px;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--aqua);
+  opacity:.25;
+  animation:lampje 4s ease-in-out infinite;
+  animation-delay:calc(var(--i,0) * .55s);
+}
+
+.doos{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:56px;height:40px;
+  background-color:var(--wit);
+  background-image:linear-gradient(var(--navy),var(--navy));
+  background-size:5px 100%;
+  background-position:center;
+  background-repeat:no-repeat;
+  border-radius:3px;
+  z-index:0;
+}
+.d.tall .doos{width:60px;height:60px}
+
+.d.akt .deur{animation:deur 16s ease-in-out infinite;animation-delay:calc(var(--t) * 3s)}
+.d.akt .doos{animation:doos 16s ease-in-out infinite;animation-delay:calc(var(--t) * 3s)}
+
+/* Hover: elke kluis gaat open en het pakketje springt op */
+.d:hover .deur{transform:rotateY(-70deg)}
+.d.akt:hover .deur{animation:none;transform:rotateY(-70deg)}
+.d:hover .doos,
+.d.akt:hover .doos{animation:spring .7s ease-out both;opacity:1}
+.d:hover .deur::before{opacity:1;animation:none}
+
+@keyframes deur{
+  0%,6%{transform:rotateY(0)}
+  11%,24%{transform:rotateY(-70deg)}
+  30%,100%{transform:rotateY(0)}
+}
+@keyframes doos{
+  0%,16%{opacity:1;transform:translateY(0) scale(1)}
+  21%{opacity:0;transform:translateY(-18px) scale(1.2)}
+  97%{opacity:0;transform:translateY(0) scale(1)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes spring{
+  0%{transform:translateY(0)}
+  35%{transform:translateY(-10px) rotate(-4deg)}
+  65%{transform:translateY(0) rotate(2deg)}
+  82%{transform:translateY(-4px)}
+  100%{transform:translateY(0) rotate(0)}
+}
+@keyframes lampje{
+  0%,100%{opacity:.25}
+  50%{opacity:.95}
+}
+
+/* Gewone onderdelen */
+section{padding:4.5rem 0}
+h2{font-size:clamp(1.6rem,3.4vw,2.2rem);line-height:1.2;letter-spacing:-.01em;margin:0 0 1.6rem}
+.smal{max-width:40rem}
+
+.vervoerders{display:grid;grid-template-columns:repeat(2,1fr);gap:0 3rem;max-width:46rem}
+.vervoerder{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:1rem .75rem;
+  margin:0 -.75rem;
+  border-top:1px solid var(--line);
+  border-radius:0 0 8px 8px;
+  transition:background .25s ease;
+}
+.vervoerder strong{font-size:1.15rem;display:inline-block;transition:transform .25s ease}
+.vervoerder a{
+  color:var(--muted);font-size:.95rem;text-decoration:none;padding-bottom:1px;
+  background:linear-gradient(var(--navy),var(--navy)) no-repeat 0 100%/0 1px;
+  transition:background-size .25s ease,color .2s ease;
+}
+.vervoerder:hover{background:rgba(166,186,218,.28)}
+.vervoerder:hover strong{transform:translateX(8px)}
+.vervoerder:hover a{color:var(--navy);background-size:100% 1px}
+
+.stappen{background:var(--aqua)}
+.stappen ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.stappen li{padding-top:1rem;border-top:3px solid var(--navy);transition:transform .25s ease}
+.stappen li:hover{transform:translateY(-6px)}
+.stappen .nr{display:block;font-weight:700;font-size:1.6rem;line-height:1.2;margin-bottom:.4rem;transform-origin:left center;transition:transform .25s ease}
+.stappen li:hover .nr{transform:scale(1.25)}
+.stappen p{margin:0}
+
+details{border-top:1px solid var(--line);padding:1rem 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{
+  cursor:pointer;
+  font-weight:600;
+  font-size:1.08rem;
+  list-style:none;
+  display:flex;justify-content:space-between;gap:1rem;
+  transition:transform .2s ease;
+}
+summary:hover{transform:translateX(6px)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:500;font-size:1.4rem;line-height:1.2;color:var(--muted);transition:transform .3s ease}
+details[open] summary::after{transform:rotate(135deg)}
+details p{margin:.7rem 0 0;color:var(--muted);max-width:40rem}
+details[open] p{animation:schuif .35s ease-out}
+@keyframes schuif{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+.plek{border-top:1px solid var(--line)}
+.plek .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:3rem;align-items:start}
+.adres{font-size:1.2rem;font-style:normal;font-weight:600;margin:0 0 .3rem}
+.plek .open-tijd{margin:0 0 1.5rem;color:var(--muted)}
+.plek .knop.vol{background:var(--navy);border-color:var(--navy);color:var(--wit)}
+.plek .knop.vol:hover{background:var(--aqua);border-color:var(--aqua);color:var(--navy);box-shadow:0 10px 18px rgba(22,39,70,.25)}
+.buren{margin:2rem 0 0;padding-left:1rem;border-left:3px solid var(--aqua);color:var(--muted);font-size:.95rem}
+.kaart{width:100%;height:340px;border:0;border-radius:10px;background:rgba(166,186,218,.3)}
+
+footer{background:var(--navy);color:var(--aqua);padding:1.6rem 0;font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem}
+
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr;gap:2.5rem}
+  .wall{margin-left:0;max-width:320px}
+  .stappen ol{grid-template-columns:1fr}
+  .plek .wrap{grid-template-columns:1fr;gap:2rem}
+  .vervoerders{grid-template-columns:1fr}
+  .top nav{gap:1rem}
+  .pk:nth-child(3),.pk:nth-child(6),.pk:nth-child(8){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important}
+  .deur,.doos,.deur::before,.pk i,details[open] p{animation:none!important}
+  .pk{transform:none}
+  .d.eerst .deur{transform:rotateY(-70deg)}
+  .knop:hover,.stappen li:hover,summary:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="merk" href="#">Pakketpunt Barneveld</a>
+    <nav aria-label="Hoofdmenu">
+      <a href="#zo-werkt-het">Zo werkt het</a>
+      <a href="#vragen">Vragen</a>
+      <a href="#route">Route</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero" id="hero">
+    <div class="achter" aria-hidden="true">
+      <span class="pk" style="left:3%;top:9%;--s:54px;--r:-14deg;--o:.22;--z:.6;--v:7s;--d:-1s"><i></i></span>
+      <span class="pk" style="left:44%;top:7%;--s:38px;--r:18deg;--o:.22;--z:-.4;--v:9s;--d:-4s"><i></i></span>
+      <span class="pk" style="left:47%;top:78%;--s:64px;--r:8deg;--o:.16;--z:1;--v:8s;--d:-2s"><i></i></span>
+      <span class="pk" style="left:90%;top:9%;--s:60px;--r:-8deg;--o:.26;--z:.8;--v:10s;--d:-6s"><i></i></span>
+      <span class="pk" style="left:83%;top:80%;--s:44px;--r:22deg;--o:.24;--z:-.8;--v:7.5s;--d:-3s"><i></i></span>
+      <span class="pk" style="left:2%;top:76%;--s:80px;--r:-6deg;--o:.12;--z:1.2;--v:11s;--d:-5s"><i></i></span>
+      <span class="pk" style="left:62%;top:4%;--s:30px;--r:30deg;--o:.26;--z:.3;--v:6.5s;--d:-2.5s"><i></i></span>
+      <span class="pk" style="left:57%;top:88%;--s:36px;--r:-20deg;--o:.22;--z:-.5;--v:9.5s;--d:-7s"><i></i></span>
+    </div>
+    <div class="wrap">
+      <div>
+        <h1>Pakketpunt Barneveld</h1>
+        <p class="lead">Haal je pakket op wanneer het jou uitkomt. Het Pakketpunt is dag en nacht open.</p>
+        <div class="knoppen">
+          <a class="knop vol" href="https://www.google.com/maps/dir/?api=1&amp;destination=Valkseweg+104+Barneveld" target="_blank" rel="noopener">Route plannen</a>
+          <a class="knop rand" href="#vragen">Veelgestelde vragen</a>
+        </div>
+        <p class="feit">Open: alle dagen, 24 uur per dag</p>
+      </div>
+      <div class="wall" aria-hidden="true">
+        <div class="d" style="--i:0"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d tall akt eerst" style="--i:1;--t:0"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d" style="--i:2"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d akt" style="--i:3;--t:2"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d akt" style="--i:4;--t:1"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d wide akt" style="--i:5;--t:3"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d" style="--i:6"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d" style="--i:7"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d akt" style="--i:8;--t:4"><div class="doos"></div><div class="deur"></div></div>
+        <div class="d" style="--i:9"><div class="doos"></div><div class="deur"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="vervoerders">
+    <div class="wrap">
+      <h2>Pakketten van deze vervoerders</h2>
+      <div class="vervoerders">
+        <div class="vervoerder"><strong>DPD</strong><a href="https://www.dpd.com/nl/" target="_blank" rel="noopener">Pakket volgen</a></div>
+        <div class="vervoerder"><strong>Mondial Relay</strong><a href="https://www.mondialrelay.nl" target="_blank" rel="noopener">Pakket volgen</a></div>
+        <div class="vervoerder"><strong>Vinted Go</strong><a href="https://www.vinted.nl" target="_blank" rel="noopener">Naar Vinted</a></div>
+        <div class="vervoerder"><strong>UPS</strong><a href="https://www.ups.com/nl" target="_blank" rel="noopener">Pakket volgen</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stappen" id="zo-werkt-het">
+    <div class="wrap">
+      <h2>Zo haal je je pakket op</h2>
+      <ol>
+        <li><span class="nr">1</span><p>Wacht tot de vervoerder je laat weten dat je pakket klaarligt. Dat zie je in het bericht of in de app.</p></li>
+        <li><span class="nr">2</span><p>Kom langs wanneer het jou uitkomt. Je hoeft niet te letten op openingstijden.</p></li>
+        <li><span class="nr">3</span><p>Gebruik de code uit het bericht bij de kluis van jouw vervoerder en pak je pakket.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="vragen">
+    <div class="wrap smal">
+      <h2>Veelgestelde vragen</h2>
+      <details>
+        <summary>Waar is mijn pakket?</summary>
+        <p>Het Pakketpunt kan niet zien waar jouw pakket is. Kijk in het bericht of de app van de vervoerder. Daar zie je ook wanneer het pakket klaarligt.</p>
+      </details>
+      <details>
+        <summary>Hoe haal ik mijn pakket op?</summary>
+        <p>Je krijgt van de vervoerder een bericht met een code. Gebruik die code bij de kluis van die vervoerder.</p>
+      </details>
+      <details>
+        <summary>Is het Pakketpunt altijd open?</summary>
+        <p>Ja. Je kunt dag en nacht komen, ook in het weekend en op feestdagen.</p>
+      </details>
+      <details>
+        <summary>Hoe lang ligt mijn pakket klaar?</summary>
+        <p>Dat bepaalt de vervoerder. In het bericht dat je kreeg staat tot wanneer je pakket klaarligt.</p>
+      </details>
+      <details>
+        <summary>De kluis gaat niet open. Wat nu?</summary>
+        <p>Controleer eerst of je de juiste code hebt gebruikt en de juiste kluis hebt gekozen. Lukt het dan nog niet, neem dan contact op met de vervoerder. Die kan het probleem het snelst oplossen.</p>
+      </details>
+      <details>
+        <summary>Kan ik hier ook een pakket versturen of retourneren?</summary>
+        <p>Dat verschilt per vervoerder. Kijk in de app of op de website van de vervoerder of dit kan en hoe het werkt.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="plek" id="route">
+    <div class="wrap">
+      <div>
+        <h2>Hier vind je ons</h2>
+        <address class="adres">Valkseweg 104<br>Barneveld</address>
+        <p class="open-tijd">Alle dagen open, dag en nacht.</p>
+        <a class="knop vol" href="https://www.google.com/maps/dir/?api=1&amp;destination=Valkseweg+104+Barneveld" target="_blank" rel="noopener">Route plannen</a>
+        <p class="buren">Het Pakketpunt ligt naast woningen. Rij ’s avonds en ’s nachts rustig, zet je motor uit en sluit je portier zacht.</p>
+      </div>
+      <iframe class="kaart" title="Kaart met de locatie van Pakketpunt Barneveld" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Valkseweg+104,+Barneveld&amp;output=embed"></iframe>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Pakketpunt Barneveld</span>
+    <span>Valkseweg 104, Barneveld</span>
+  </div>
+</footer>
+
+<script>
+/* De pakketjes op de achtergrond schuiven licht mee met de muis */
+(function(){
+  var hero=document.getElementById("hero");
+  if(!hero||!window.matchMedia) return;
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if(!window.matchMedia("(hover: hover)").matches) return;
+  hero.addEventListener("pointermove",function(e){
+    var r=hero.getBoundingClientRect();
+    var x=(e.clientX-r.left)/r.width-.5;
+    var y=(e.clientY-r.top)/r.height-.5;
+    hero.style.setProperty("--mx",(x*60).toFixed(1));
+    hero.style.setProperty("--my",(y*40).toFixed(1));
+  });
+  hero.addEventListener("pointerleave",function(){
+    hero.style.setProperty("--mx",0);
+    hero.style.setProperty("--my",0);
+  });
+})();
+</script>
+
+</body>
+</html>
